@@ -1,11 +1,24 @@
 <template>
-  <div class="body">
-    <div :class="{'frist-face': !start, 'frist-rotation-face': start}" v-if="number == '1'">
+  <div class="body" >
+    <div
+      :class="{
+        'frist-face': !start,
+        'frist-rotation-face': start,
+        intentionAttack: intention == 'attack',
+        intentionDefend: intention == 'defend',
+      }"
+      v-if="number == '1'"
+    >
       <div class="pip"></div>
     </div>
 
     <div
-      :class="{ 'second-face': !start, 'second-rotation-face': start }"
+      :class="{
+        'second-face': !start,
+        'second-rotation-face': start,
+        intentionAttack: intention == 'attack',
+        intentionDefend: intention == 'defend',
+      }"
       v-else-if="number == '2'"
     >
       <div class="pip"></div>
@@ -13,7 +26,12 @@
     </div>
 
     <div
-      :class="{ 'third-face': !start, 'third-rotation-face': start }"
+      :class="{
+        'third-face': !start,
+        'third-rotation-face': start,
+        intentionAttack: intention == 'attack',
+        intentionDefend: intention == 'defend',
+      }"
       v-else-if="number == '3'"
     >
       <div class="pip"></div>
@@ -22,7 +40,12 @@
     </div>
 
     <div
-      :class="{ 'fourth-face': !start, 'fourth-rotation-face': start }"
+      :class="{
+        'fourth-face': !start,
+        'fourth-rotation-face': start,
+        intentionAttack: intention == 'attack',
+        intentionDefend: intention == 'defend',
+      }"
       v-else-if="number == '4'"
     >
       <div class="colum">
@@ -36,7 +59,12 @@
     </div>
 
     <div
-      :class="{ 'fifth-face': !start, 'fifth-rotation-face': start }"
+      :class="{
+        'fifth-face': !start,
+        'fifth-rotation-face': start,
+        intentionAttack: intention == 'attack',
+        intentionDefend: intention == 'defend',
+      }"
       v-else-if="number == '5'"
     >
       <div class="colum">
@@ -50,7 +78,15 @@
       </div>
     </div>
 
-    <div :class="{ 'sixth-face': !start, 'sixth-rotation-face': start }" v-else>
+    <div
+      :class="{
+        'sixth-face': !start,
+        'sixth-rotation-face': start,
+        intentionAttack: intention == 'attack',
+        intentionDefend: intention == 'defend',
+      }"
+      v-else
+    >
       <div class="colum">
         <div class="pip"></div>
         <div class="pip"></div>
@@ -76,7 +112,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .body {
   display: flex;
   justify-content: center;
@@ -85,15 +121,15 @@ export default {
   flex-wrap: wrap;
   align-content: center;
 }
+
 [class$="face"] {
-  background: #011627;
   width: 100px;
   height: 100px;
   border-radius: 10%;
   margin: 15px;
 }
 .pip {
-  background: #fff;
+  background: white;
   width: 20px;
   height: 20px;
   border-radius: 50px;
@@ -204,6 +240,24 @@ export default {
   display: flex;
   justify-content: space-between;
   animation: rotate 0.5s linear infinite;
+}
+
+.intentionAttack {
+  background: red;
+  width: 100px;
+  height: 100px;
+  border-radius: 10%;
+  margin: 8px;
+  padding: 6px;
+}
+
+.intentionDefend {
+  background: yellow;
+  width: 100px;
+  height: 100px;
+  border-radius: 10%;
+  margin: 8px;
+  padding: 6px;
 }
 
 @keyframes rotate {

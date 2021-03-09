@@ -1,16 +1,16 @@
 <template>
-  <v-app>
+  <v-app id="table">
     <v-main>
-      <DiceTable/>
+      <DiceTable />
     </v-main>
   </v-app>
 </template>
 
 <script>
-import DiceTable from './components/DiceTable';
+import DiceTable from "./components/DiceTable";
 
 export default {
-  name: 'App',
+  name: "App",
 
   components: {
     DiceTable,
@@ -21,3 +21,13 @@ export default {
   }),
 };
 </script>
+
+<style>
+  #table{
+    background-image: url('./assets/bg.webp');
+    background-size: cover;
+  }
+  h1, h2, h3 {
+    color: #fff;
+  }
+</style>

@@ -12,23 +12,37 @@
         Só são permitidos <strong>3 dados na mesa</strong>
       </v-alert>
     </div>
+
     <div class="diceTable">
-      <h1>Dado danado</h1>
-
-      <h3>Declare sua intenção</h3>
-
-      <v-radio-group v-model="intention" mandatory>
-        <v-radio label="Atacar" value="error"></v-radio>
-        <v-radio label="Defender" value="primary"></v-radio>
-      </v-radio-group>
-
-      <v-btn @click="randonData" depressed :color="intention">
-        Adicionar dado
-      </v-btn>
+      <div>
+        <img
+          src="../assets/diceA.png"
+          @click="randonData('attack')"
+          class="dice"
+          id="diceA"
+        />
+        <img
+          src="../assets/diceD.png"
+          @click="randonData('defend')"
+          class="dice"
+          id="diceD"
+        />
+      </div>
 
       <div class="component">
         <div v-for="(data, index) in dataC" :key="index">
-          <DataComponent :number="data.number" :start="toRollItem" />
+          <DiceComponent
+            :number="data.number"
+            :start="toRollItem"
+            :intention="data.intention"
+            v-if="data.intention == 'defend'"
+          />
+          <DiceComponentAttack
+            :number="data.number"
+            :start="toRollItem"
+            :intention="data.intention"
+            v-else
+          />
         </div>
       </div>
 
@@ -36,7 +50,7 @@
         <v-btn
           @click="toRoll"
           depressed
-          color="success"
+          color="primary"
           :loading="toRollItem"
           :disabled="toRollItem"
         >
@@ -57,25 +71,32 @@
 </template>
 
 <script>
-import DataComponent from "./DataComponent";
+import DiceComponent from "./DiceComponent";
+import DiceComponentAttack from "./DiceComponentAttack";
 export default {
   name: "DiceTable",
   components: {
-    DataComponent,
+    DiceComponent,
+    DiceComponentAttack,
   },
   data: () => ({
-    intention: String,
+    intentionState: String,
     dataC: [],
     toRollItem: false,
     alert: false,
   }),
   methods: {
-    randonData: function () {
+    randonData: function (intention) {
+      if (intention !== this.intentionState) {
+        this.dataC = [];
+      }
       if (this.dataC.length < 3) {
         this.dataC.push({
           id: Math.random(),
-          number: Math.floor(Math.random() * 6 + 1).toString(),
+          number: Math.round(Math.random() * 5 + 1).toString(),
+          intention,
         });
+        this.intentionState = intention;
       } else {
         this.alert = true;
       }
@@ -88,8 +109,8 @@ export default {
         this.toRollItem = true;
         setTimeout(() => {
           for (let index = 0; index < this.dataC.length; index++) {
-            this.dataC[index].number = Math.floor(
-              Math.random() * 6 + 1
+            this.dataC[index].number = Math.round(
+              Math.random() * 5 + 1
             ).toString();
           }
           this.toRollItem = false;
@@ -125,5 +146,28 @@ export default {
   display: flex;
   margin: 25px;
   justify-content: center;
+}
+
+.dice {
+  width: 130px;
+  height: 130px;
+}
+
+#diceA {
+  margin-right: 5px;
+}
+#diceD {
+  margin-left: 5px;
+}
+
+.testmove {
+  display: block;
+  position: absolute;
+  top: 0;
+  height: 150px;
+  width: 150px;
+  margin: 200px;
+  background: #333;
+  color: white;
 }
 </style>
